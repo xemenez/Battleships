@@ -5,13 +5,10 @@ public class App {
     public static void main(String[] args){
         // 0 - void, 1 - miss, 20 - ship length 2 alive, 21 - ship length 2 dead, and so on 
         Scanner input = new Scanner(System.in);
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println("0, 1, 2, 3, 4, 5, 6, 7, 8, 9");
+        
         
 
-        int[][] field = {
+        int[][] player1 = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -24,9 +21,25 @@ public class App {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         };
 
+
+        int[][] player2 = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        };
+
+
+        System.out.println("Player 1 field");
         for(int i = 0; i < 10; i++){
                 for(int j = 0; j < 10; j++){
-                    if(field[i][j] == 0){
+                    if(player1[i][j] == 0){
                         System.out.print("?" + " ");
                     }
                 }
@@ -34,14 +47,34 @@ public class App {
         }
 
 
+        System.out.println("Player 1, please enter your ships");
+
+        addShip(player1, 5);
+        addShip(player1, 4);
+        addShip(player1, 3);
+        addShip(player1, 2);
+        addShip(player1, 2);
+
+        
+        System.out.println("Player 2 field");
+        for(int i = 0; i < 10; i++){
+                for(int j = 0; j < 10; j++){
+                    if(player2[i][j] == 0){
+                        System.out.print("?" + " ");
+                    }
+                }
+                System.out.println(" ");
+        }
 
 
-        addShip(field, 5);
-        addShip(field, 4);
-        addShip(field, 3);
-        addShip(field, 2);
-        addShip(field, 2);
+        System.out.println("Player 2, please enter your ships");
 
+        addShip(player2, 5);
+        addShip(player2, 4);
+        addShip(player2, 3);
+        addShip(player2, 2);
+        addShip(player2, 2);
+        
 
 
         
@@ -147,14 +180,15 @@ public class App {
                 
             }
             
-            if(!canPlace(field, coordsColumn, coordsRow, length)) {
+            if(!canPlace(field, coordsRow, coordsColumn, length)) {
                 System.out.println("No space. Enter the ship again");
+                
             }
         
             
 
 
-        }while(!canPlace(field, coordsRow, coordsRow, length));
+        }while(!canPlace(field, coordsRow, coordsColumn, length));
                 
         for(int i = 0; i < length; i++){
             
