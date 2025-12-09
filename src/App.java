@@ -44,17 +44,26 @@ public class App {
 
         showField(player1);
         System.out.println("Player 1, enter your ships");
-        addShip(player1, 5, player1Ships);
-        //addShip(player1, 4, player1Ships);
-        //addShip(player1, 3, player1Ships);
-        //addShip(player1, 2, player1Ships);
+        addShip(player1, 5, player1Ships, 1);
+        //addShip(player1, 4, player1Ships, 1);
+        //addShip(player1, 3, player1Ships, 1);
+        addShip(player1, 2, player1Ships, 1);
+        addShip(player1, 2, player1Ships, 2);
+       
+        
+        
+
+        
 
         showField(player2);
         System.out.println("Player 2, enter your ships");
-        addShip(player2, 5, player2Ships);
-        //addShip(player2, 4, player2Ships);
-        //addShip(player2, 3, player2Ships);
-        //addShip(player2, 2, player2Ships);
+        addShip(player2, 5, player2Ships, 1);
+        //addShip(player2, 4, player2Ships, 1);
+        //addShip(player2, 3, player2Ships, 1);
+        //addShip(player2, 2, player2Ships, 1);
+        //addShip(player2, 2, player2Ships, 2);
+        
+        
 
         while((player1Ships.size() > 0) && (player2Ships.size() > 0)){
             player1Hit = true;
@@ -149,7 +158,7 @@ public class App {
         return true;
     }
 
-    public static void addShip(int[][] field, int length,  List<int[][]> player){
+    public static void addShip(int[][] field, int length,  List<int[][]> player, int shipNumber){
         Scanner input = new Scanner(System.in);
         String orientation; 
         int[] coordsRow = new int[5];
@@ -220,12 +229,12 @@ public class App {
                 
         for(int i = 0; i < length; i++){
             
-            field[coordsRow[i]][coordsColumn[i]] = length * 10;
+            field[coordsRow[i]][coordsColumn[i]] = (length * 100) + (shipNumber * 10);
         }
         int[][] ship = new int[3][6];
 
         ship[0][0] = length;
-        ship[1][0] = length;
+        ship[1][0] = shipNumber;
         ship[2][0] = length;
 
 
@@ -273,12 +282,14 @@ public class App {
     public static boolean boom(int [][] shotField, List<int[][]> shotPlayer){
         Scanner input = new Scanner(System.in);
         boolean shipIsDead = true;
+        int shipNumber;
         int size = 0;
         int row;
         int column;
         System.out.println("Where do you want to shoot");
         row = input.nextInt();
         column = input.nextInt();
+        shipNumber = (shotField[row][column] / 10) % 10;
         switch(shotField[row][column]){
             case 0:
                 shotField[row][column] = 1;
@@ -287,7 +298,7 @@ public class App {
             case 1:
                 System.out.println("You have already missed here");
                 return false;
-            case 51, 41, 31, 21:
+            case 511, 521, 411, 421, 311, 321, 211, 221:
                 System.out.println("This square was already destroyed");
                 return false;   
             default:
@@ -297,10 +308,10 @@ public class App {
 
                 }
                 else{
-                    size = shotField[row][column] / 10;
+                    size = shotField[row][column] / 100;
                     //looks for the ship that got hit
                     for(int i = 0; i < shotPlayer.size(); i++){
-                        if(shotPlayer.get(i)[0][0] == size){
+                        if((shotPlayer.get(i)[0][0] == size) && shotPlayer.get(i)[1][0] == shipNumber){
                             //looks which square of the ship got hit
                             for(int u = 1; u < size + 1; u++){
                                 //sets the hit square to "1" which means that it has been destroyed
@@ -364,6 +375,16 @@ public class App {
             System.out.println(" ");
         }
     }
+
+    public static void showFieldNumbers(int[][] field){
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                System.out.print(field[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+    }
+
 
     
 }
